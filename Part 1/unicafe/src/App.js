@@ -14,6 +14,24 @@ const Statistic = (props) => {
   )
 }
 
+const Statistics = ({good, neutral, bad, all}) => {
+  const average = ((good * 1) + (neutral * 0) + (bad * -1)/all).toFixed(2)
+  const postiveFeedback = ((good/all)*100).toFixed(1) + "%"
+  
+  if (all > 0) { 
+    return (
+    <div>
+    <Statistic ratingGrade="good" rating={good} />
+    <Statistic ratingGrade="neutral" rating={neutral} />
+    <Statistic ratingGrade="bad" rating={bad} />
+    <Statistic ratingGrade="all" rating={all} />
+    <Statistic ratingGrade="Average" rating={average} />
+    <Statistic ratingGrade="Positive Feedbacks" rating={postiveFeedback} />
+    </div>
+  ) } 
+  return (<div> No statistics given </div>)
+}
+
 const Title = ({text}) => {
   return (
     <h1> {text} </h1>
@@ -51,10 +69,7 @@ const App = () => {
       <Button handleClick={handleNeutralClick} text="Neutral" />
       <Button handleClick={handleBadClick} text="Bad" />
       <Title text="Statistics" />
-      <Statistic ratingGrade="good" rating={good} />
-      <Statistic ratingGrade="neutral" rating={neutral} />
-      <Statistic ratingGrade="bad" rating={bad} />
-      <Statistic ratingGrade="all" rating={all} />
+      <Statistics good={good} neutral={neutral} bad={bad} all={all} />
 
 
     </div>
