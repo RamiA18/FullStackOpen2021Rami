@@ -6,7 +6,7 @@ const Button = (props) => {
   )
 }
 
-const Data = (props) => {
+const Statistic = (props) => {
   return (
     <div>
       <p> {props.ratingGrade}: {props.rating} </p>
@@ -51,12 +51,10 @@ const App = () => {
       <Button handleClick={handleNeutralClick} text="Neutral" />
       <Button handleClick={handleBadClick} text="Bad" />
       <Title text="Statistics" />
-      <Data ratingGrade="good" rating={good} />
-      <Data ratingGrade="neutral" rating={neutral} />
-      <Data ratingGrade="bad" rating={bad} />
-      <Data ratingGrade="all" rating={all} />
-
-
+      <Statistic ratingGrade="good" rating={good} />
+      <Statistic ratingGrade="neutral" rating={neutral} />
+      <Statistic ratingGrade="bad" rating={bad} />
+      <Statistic ratingGrade="all" rating={all} />
 
 
     </div>
