@@ -8,25 +8,29 @@ const Button = (props) => {
 
 const Statistic = (props) => {
   return (
-    <div>
-      <p> {props.ratingGrade}: {props.rating} </p>
-    </div>
+    <tbody>
+      <tr>
+      <td>{props.ratingGrade} </td><td>{props.rating}</td>
+      </tr>
+      </tbody>
   )
 }
 
 const Statistics = ({good, neutral, bad, all}) => {
-  const average = ((good * 1) + (neutral * 0) + (bad * -1)/all).toFixed(2)
-  const postiveFeedback = ((good/all)*100).toFixed(1) + "%"
+  const average = (((good * 1) + (neutral * 0) + (bad * -1)) / all).toFixed(2)
+  const postiveFeedback = ((good/all)*100).toFixed(2) + "%"
   
   if (all > 0) { 
     return (
     <div>
+      <table>
     <Statistic ratingGrade="good" rating={good} />
     <Statistic ratingGrade="neutral" rating={neutral} />
     <Statistic ratingGrade="bad" rating={bad} />
     <Statistic ratingGrade="all" rating={all} />
     <Statistic ratingGrade="Average" rating={average} />
     <Statistic ratingGrade="Positive Feedbacks" rating={postiveFeedback} />
+    </table>
     </div>
   ) } 
   return (<div> No statistics given </div>)
