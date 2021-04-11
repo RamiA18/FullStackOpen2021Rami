@@ -1,70 +1,69 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 const Button = (props) => {
-  return (
-    <button onClick={props.handleClick}> {props.text} </button>
-  )
-}
+  return <button onClick={props.handleClick}> {props.text} </button>;
+};
 
 const Statistic = (props) => {
   return (
     <tbody>
       <tr>
-      <td>{props.ratingGrade} </td><td>{props.rating}</td>
+        <td>{props.ratingGrade} </td>
+        <td>{props.rating}</td>
       </tr>
-      </tbody>
-  )
-}
+    </tbody>
+  );
+};
 
-const Statistics = ({good, neutral, bad, all}) => {
-  const average = (((good * 1) + (neutral * 0) + (bad * -1)) / all).toFixed(2)
-  const postiveFeedback = ((good/all)*100).toFixed(2) + "%"
-  
-  if (all > 0) { 
+const Statistics = ({ good, neutral, bad, all }) => {
+  const average = ((good * 1 + neutral * 0 + bad * -1) / all).toFixed(2);
+  const postiveFeedback = ((good / all) * 100).toFixed(2) + "%";
+
+  if (all > 0) {
     return (
-    <div>
-      <table>
-    <Statistic ratingGrade="good" rating={good} />
-    <Statistic ratingGrade="neutral" rating={neutral} />
-    <Statistic ratingGrade="bad" rating={bad} />
-    <Statistic ratingGrade="all" rating={all} />
-    <Statistic ratingGrade="Average" rating={average} />
-    <Statistic ratingGrade="Positive Feedbacks" rating={postiveFeedback} />
-    </table>
-    </div>
-  ) } 
-  return (<div> No statistics given </div>)
-}
+      <div>
+        <table>
+          <Statistic ratingGrade="good" rating={good} />
+          <Statistic ratingGrade="neutral" rating={neutral} />
+          <Statistic ratingGrade="bad" rating={bad} />
+          <Statistic ratingGrade="all" rating={all} />
+          <Statistic ratingGrade="Average" rating={average} />
+          <Statistic
+            ratingGrade="Positive Feedbacks"
+            rating={postiveFeedback}
+          />
+        </table>
+      </div>
+    );
+  }
+  return <div> No statistics given </div>;
+};
 
-const Title = ({text}) => {
-  return (
-    <h1> {text} </h1>
-  )
-}
+const Title = ({ text }) => {
+  return <h1> {text} </h1>;
+};
 
 const App = () => {
   // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [all, setAll] = useState(0)
-  
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+  const [all, setAll] = useState(0);
 
   const handleGoodClick = () => {
-    setGood(good + 1)
-    setAll(all + 1)
-  }
+    setGood(good + 1);
+    setAll(all + 1);
+  };
 
   const handleNeutralClick = () => {
-    setNeutral(neutral + 1)
-    setAll(all + 1)
-
-  }
+    setNeutral(neutral + 1);
+    setAll(all + 1);
+  };
 
   const handleBadClick = () => {
-    setBad(bad + 1)
-    setAll(all + 1)
-  }
+    setBad(bad + 1);
+    setAll(all + 1);
+  };
 
   return (
     <div>
@@ -74,10 +73,8 @@ const App = () => {
       <Button handleClick={handleBadClick} text="Bad" />
       <Title text="Statistics" />
       <Statistics good={good} neutral={neutral} bad={bad} all={all} />
-
-
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
