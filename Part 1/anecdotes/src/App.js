@@ -1,5 +1,26 @@
 import React, { useState } from 'react'
 
+const Title = (props) => {
+  return (
+    <div>
+      <h1>{props.text}</h1>
+    </div>
+  )
+}
+
+const Anecdote = (props) => {
+  return (
+    <div>
+      <p>
+        {props.anecdote}
+      </p>
+      <p style={{fontWeight: "bold"}}>
+        has {props.votes} votes
+      </p>
+    </div>
+  )
+}
+
 const Button = (props) => {
   return (
     <div>
@@ -8,6 +29,14 @@ const Button = (props) => {
   )
 }
 
+const HighestVoted = (props) => {
+  const {anecdotes, votes} = props
+  const highestVoted = votes.indexOf(Math.max(...votes))
+  console.log(highestVoted)
+  return (
+  <Anecdote anecdote={anecdotes[highestVoted]} votes={votes[highestVoted]} />
+  )
+}
 
 const App = () => {
   const anecdotes = [
@@ -20,18 +49,35 @@ const App = () => {
   ]
    
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(
+    new Array(anecdotes.length).fill(0))
+
 
   const getNewAnecdotes = () => {
-    const min = 0
+    const min = 0 
     const max = anecdotes.length
     const random = Math.floor(min + (Math.random() * (max - min)))
     setSelected(random)
   }
 
+  const voteHandle = () => {
+    const newVotes =
+      [...votes]
+      newVotes[selected] += 1
+    
+    setVotes(newVotes)
+  }
+
+
   return (
     <div>
-      {anecdotes[selected]}
+      <Title text="Anecdote of the day" />
+      <Anecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
       <Button handleClick={getNewAnecdotes} text="get a new anecdotes" />
+      <Button handleClick={voteHandle} text="Vote +1" />
+      <Title text="Anecdote with most votes" />
+      <HighestVoted anecdotes={anecdotes} votes={votes} />
+
     </div>
   )
 }
