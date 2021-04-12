@@ -5,11 +5,10 @@ const Content = ({ courseParts }) => {
   return (
     <div>
       {courseParts.map(({ name, exercises, id }) => (
-      <Part key={id} partName={name} exercises={exercises} />
-    ))}
+        <Part key={id} partName={name} exercises={exercises} />
+      ))}
     </div>
   );
 };
 
 export default Content;
-
