@@ -1,76 +1,74 @@
-import React, { useState } from 'react'
-
-const Person = ({name , id , number}) => {
-  return (
-      <p> {name} {number} </p>
-  )
-}
+import React, { useState } from "react";
+import HeaderTwo from "./components/HeaderTwo.js";
+import Filter from "./components/Filter.js";
+import PersonForm from "./components/PersonForm.js";
+import Persons from "./components/Persons.js";
 
 const App = () => {
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345' , id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
-  const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber ] = useState('')
-
-
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: "040-123456", id: 1 },
+    { name: "Ada Lovelace", number: "39-44-5323523", id: 2 },
+    { name: "Dan Abramov", number: "12-43-234345", id: 3 },
+    { name: "Mary Poppendieck", number: "39-23-6423122", id: 4 },
+  ]);
+  const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
+  const [filterQuery, setFilterQuery] = useState("");
 
   const addPerson = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const personObject = {
       name: newName,
       number: newNumber,
       id: persons.length + 1,
-    }
+    };
 
-    const filterName = persons.filter((person) => person.name.toLowerCase() === newName.toLowerCase());
-
+    const filterName = persons.filter(
+      (person) => person.name.toLowerCase() === newName.toLowerCase()
+    );
     if (filterName.length > 0) {
-      alert (newName + " is existing")
-
+      alert(newName + " is existing");
     } else {
-    setPersons(persons.concat(personObject))
-    setNewName('')
-    setNewNumber('')
-
-  }
-}
+      setPersons(persons.concat(personObject));
+      setNewName("");
+      setNewNumber("");
+    }
+  };
 
   const handleNameChange = (event) => {
-    setNewName(event.target.value)
-  }
+    setNewName(event.target.value);
+  };
 
   const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-  }
+    setNewNumber(event.target.value);
+  };
+
+  const handleFilterChange = (event) => {
+    setFilterQuery(event.target.value);
+  };
+
+  const personsToShow =
+    filterQuery === ""
+      ? persons
+      : persons.filter((person) =>
+          person.name.toLowerCase().includes(filterQuery.toLowerCase())
+        );
 
   return (
     <div>
-      <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input value={newName}
-          onChange={handleNameChange} />
-        </div>
-        <div>
-          number: <input value={newNumber}
-          onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers</h2>
- 
-      {persons.map(person => 
-          <Person key={person.id} name={person.name} number={person.number} />
-        )}
-
+      <HeaderTwo text="PhoneBook" />
+      <Filter value={filterQuery} handleChange={handleFilterChange} />
+      <PersonForm
+        title="Add New"
+        submitAction={addPerson}
+        nameValue={newName}
+        nameChangeHandling={handleNameChange}
+        numberValue={newNumber}
+        numberChangeHandling={handleNumberChange}
+      />
+      <Persons title="Numbers" persons={personsToShow} />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
