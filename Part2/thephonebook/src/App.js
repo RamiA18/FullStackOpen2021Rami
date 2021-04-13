@@ -1,10 +1,9 @@
-import React, { useState , useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderTwo from "./components/HeaderTwo.js";
 import Filter from "./components/Filter.js";
 import PersonForm from "./components/PersonForm.js";
 import Persons from "./components/Persons.js";
-import axios from 'axios'
-
+import axios from "axios";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -13,14 +12,10 @@ const App = () => {
   const [filterQuery, setFilterQuery] = useState("");
 
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/Persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
-      })
-  }, [])
+    axios.get("http://localhost:3001/Persons").then((response) => {
+      setPersons(response.data);
+    });
+  }, []);
 
   const addPerson = (event) => {
     event.preventDefault();
