@@ -18,7 +18,9 @@ const PersonForm = (props) => {
           />
         </div>
         <div>
-          <button type="submit">add</button>
+          <button className="btn btn-primary btn-small" type="submit">
+            add
+          </button>
         </div>
       </form>
     </div>
