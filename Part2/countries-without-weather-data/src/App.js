@@ -1,10 +1,8 @@
-// PLEASE USE YOUR OWN APIKEY (WEATHER API) HERE OR IN ENV VARIABLE IN ORDER TO GET THE APP TO WORK. WILL BE HARDCODED FOR NOW FOR EDUCATIONAL AND DEMONSTRATION PURPOSES
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
-const CountryView = ({ list, handleClick, weatherData }) => {
+const CountryView = ({ list, handleClick }) => {
   const listLength = list.length;
   switch (true) {
     case listLength === 1:
@@ -66,37 +64,6 @@ const CountryView = ({ list, handleClick, weatherData }) => {
                 width="300px"
                 height="200px"
               />
-              <h4 className="mt-5">
-                Current Weather{" "}
-                <img
-                  src={weatherData.current.weather_icons[0]}
-                  alt="weatherStatus"
-                  width="30px"
-                  height="30px"
-                />{" "}
-              </h4>
-              <p style={{ fontStyle: "italic" }}>
-                * Weather Data observed in {weatherData.location.name} at{" "}
-                {weatherData.current.observation_time}
-              </p>
-              <p>
-                <span>Current Temperature: </span>{" "}
-                {weatherData.current.temperature} C
-              </p>
-              <p>
-                <span>Feels like: </span> {weatherData.current.feelslike} C
-              </p>
-              <p>
-                <span>Current wind: </span> {weatherData.current.temperature}{" "}
-                km/h
-              </p>
-              <p>
-                <span>Current visibility: </span>{" "}
-                {weatherData.current.visibility}%
-              </p>
-              <p>
-                <span>Current humudidy: </span> {weatherData.current.humidity}%
-              </p>
             </div>
           ))}
         </div>
@@ -131,12 +98,7 @@ const CountryView = ({ list, handleClick, weatherData }) => {
 const App = () => {
   const [countries, setCountries] = useState([]);
   const [search, setSearch] = useState("");
-  const [capital, setCapital] = useState("Helsinki");
   const [list, setList] = useState([]);
-  const [weatherData, setWeatherData] = useState();
-
-  const apiKey = "82ed6a9ed50e537a10f6af4b08354f02"; // PLEASE USE YOUR OWN APIKEY HERE OR IN ENV VARIABLE IN ORDER TO GET THE APP TO WORK
-  const baseLink = "http://api.weatherstack.com/current?";
 
   useEffect(() => {
     setList(
@@ -153,22 +115,6 @@ const App = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  useEffect(() => {
-    if (list !== null && list !== undefined && list.length === 1) {
-      setCapital(list[0].capital);
-    }
-  }, [list]);
-
-  useEffect(() => {
-    if (capital !== null && capital !== undefined && capital !== "") {
-      axios
-        .get(`${baseLink}access_key=${apiKey}&query=${capital}`)
-        .then((response) => {
-          setWeatherData(response.data);
-        });
-    }
-  }, [capital]);
-
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
   };
@@ -179,7 +125,6 @@ const App = () => {
       <input className="mb-4" onChange={handleSearchChange} value={search} />
       <CountryView
         list={list}
-        weatherData={weatherData}
         handleClick={(countrySelector) => setSearch(countrySelector)}
       />
     </div>
