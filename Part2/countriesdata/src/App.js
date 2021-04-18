@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
-
 const CountryView = ({ list, handleClick, weatherData }) => {
   const listLength = list.length;
   switch (true) {
@@ -12,9 +11,9 @@ const CountryView = ({ list, handleClick, weatherData }) => {
           {" "}
           {list.map((country) => (
             <div key={country.name}>
-                {" "}
-                <h3> Country Data </h3>
-                <p>
+              {" "}
+              <h3> Country Data </h3>
+              <p>
                 <span style={{ fontWeight: "bold" }}>Country: </span>{" "}
                 {country.name}
               </p>
@@ -62,17 +61,37 @@ const CountryView = ({ list, handleClick, weatherData }) => {
                 width="300px"
                 height="200px"
               />
-              <h4 className="mt-5">Current Weather <img
-                src={weatherData.current.weather_icons[0]}
-                alt="weatherStatus"
-                width="30px"
-                height="30px"
-              /> </h4>
-              <p><span>Current Temperature: </span> {weatherData.current.temperature} C</p>
-              <p><span>Feels like: </span> {weatherData.current.feelslike} C</p>
-              <p><span>Current wind: </span> {weatherData.current.temperature}</p>
-              <p><span>Current visibility: </span> {weatherData.current.visibility}%</p>
-              <p><span>Current humudidy: </span> {weatherData.current.humidity}%</p>
+              <h4 className="mt-5">
+                Current Weather{" "}
+                <img
+                  src={weatherData.current.weather_icons[0]}
+                  alt="weatherStatus"
+                  width="30px"
+                  height="30px"
+                />{" "}
+              </h4>
+              <p style={{ fontStyle: "italic" }}>
+                * Weather Data observed in {weatherData.location.name} at{" "}
+                {weatherData.current.observation_time}
+              </p>
+              <p>
+                <span>Current Temperature: </span>{" "}
+                {weatherData.current.temperature} C
+              </p>
+              <p>
+                <span>Feels like: </span> {weatherData.current.feelslike} C
+              </p>
+              <p>
+                <span>Current wind: </span> {weatherData.current.temperature}{" "}
+                km/h
+              </p>
+              <p>
+                <span>Current visibility: </span>{" "}
+                {weatherData.current.visibility}%
+              </p>
+              <p>
+                <span>Current humudidy: </span> {weatherData.current.humidity}%
+              </p>
             </div>
           ))}
         </div>
@@ -85,7 +104,12 @@ const CountryView = ({ list, handleClick, weatherData }) => {
           {list.map((country) => (
             <div className="mt-2" key={country.alpha3Code}>
               {country.name}
-              <button className="btn btn-info btn-sm ml-1" onClick={() => handleClick(country.name)}>Show</button>
+              <button
+                className="btn btn-info btn-sm ml-1"
+                onClick={() => handleClick(country.name)}
+              >
+                Show
+              </button>
             </div>
           ))}{" "}
         </div>
@@ -106,7 +130,7 @@ const App = () => {
   const [list, setList] = useState([]);
   const [weatherData, setWeatherData] = useState();
 
-  const apiKey = "82ed6a9ed50e537a10f6af4b08354f02"
+  const apiKey = "82ed6a9ed50e537a10f6af4b08354f02";
   const baseLink = "http://api.weatherstack.com/current?";
 
   useEffect(() => {
@@ -125,21 +149,21 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    if (list !== null && list !== undefined && list.length === 1 ) {
-      setCapital(list[0].capital)
-  
-    }}
-    , [list]);
+    if (list !== null && list !== undefined && list.length === 1) {
+      setCapital(list[0].capital);
+    }
+  }, [list]);
 
   useEffect(() => {
-      if (capital !== null && capital !== undefined && capital !== "" ) {
-        axios
+    if (capital !== null && capital !== undefined && capital !== "") {
+      axios
         .get(`${baseLink}access_key=${apiKey}&query=${capital}`)
-        .then(response => {
+        .then((response) => {
           setWeatherData(response.data);
+          console.log(response.data);
         });
-    }}, [capital]);
-
+    }
+  }, [capital]);
 
   const handleSearchChange = (event) => {
     setSearch(event.target.value);
@@ -147,7 +171,8 @@ const App = () => {
 
   return (
     <div className="container">
-      Search Country: <input className="mb-4" onChange={handleSearchChange} value={search} />
+      Search Country:{" "}
+      <input className="mb-4" onChange={handleSearchChange} value={search} />
       <CountryView
         list={list}
         weatherData={weatherData}
