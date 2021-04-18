@@ -1,3 +1,5 @@
+// PLEASE USE YOUR OWN APIKEY (WEATHER API) HERE OR IN ENV VARIABLE IN ORDER TO GET THE APP TO WORK. WILL BE HARDCODED FOR NOW FOR EDUCATIONAL AND DEMONSTRATION PURPOSES
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
@@ -130,7 +132,7 @@ const App = () => {
   const [list, setList] = useState([]);
   const [weatherData, setWeatherData] = useState();
 
-  const apiKey = "82ed6a9ed50e537a10f6af4b08354f02";
+  const apiKey = "82ed6a9ed50e537a10f6af4b08354f02"; // PLEASE USE YOUR OWN APIKEY HERE OR IN ENV VARIABLE IN ORDER TO GET THE APP TO WORK
   const baseLink = "http://api.weatherstack.com/current?";
 
   useEffect(() => {
