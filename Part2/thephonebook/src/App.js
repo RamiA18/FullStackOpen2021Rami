@@ -91,6 +91,7 @@ const App = () => {
           errorMessage: `${newName} has been added`,
           errorType: "accepted",
         });
+
         // setTimeout(() => setNotification(''), 5000);
         // setNewName("");
         // setNewNumber("");
