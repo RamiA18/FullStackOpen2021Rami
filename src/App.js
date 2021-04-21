@@ -73,6 +73,7 @@ const App = () => {
               errorType: "accepted",
             });
             setTimeout(() => setNotification(""), 5000);
+
           })
           .catch((error) => {
             setNotification({
@@ -85,26 +86,24 @@ const App = () => {
       }
     } else {
       personServices
-        .create(personObject)
-        .then((newPerson) => {
-          setPersons(persons.concat(newPerson));
-          setNotification({
-            errorMessage: `${newName} has been added`,
-            errorType: "accepted",
-          });
-          setTimeout(() => setNotification(""), 5000);
-
-          // setTimeout(() => setNotification(''), 5000);
-          // setNewName("");
-          // setNewNumber("");
-        })
-        .catch((error) => {
-          setNotification({
-            errorMessage: error.response.data.error,
-            errorType: "rejected",
-          });
-          setTimeout(() => setNotification(""), 5000);
+      .create(personObject)
+      .then((newPerson) => {
+        setPersons(persons.concat(newPerson));
+        setNotification({
+          errorMessage: `${newName} has been added`,
+          errorType: "accepted",
         });
+        setTimeout(() => setNotification(""), 5000);
+        // setNewName("");
+        // setNewNumber("");
+      })
+      .catch((error) => {
+        setNotification({
+          errorMessage: error.response.data.error,
+          errorType: "rejected",
+        });
+        setTimeout(() => setNotification(""), 5000);
+      });
     }
   };
 
