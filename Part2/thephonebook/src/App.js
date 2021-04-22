@@ -94,8 +94,6 @@ const App = () => {
           errorType: "accepted",
         });
         setTimeout(() => setNotification(""), 5000);
-        // setNewName("");
-        // setNewNumber("");
       })
       .catch((error) => {
         setNotification({
