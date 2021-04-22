@@ -21,10 +21,6 @@ const App = () => {
     });
   }, []);
 
-  useEffect(() => {
-    setTimeout(() => setNotification(""), 5000);
-  }, [notification]);
-
   const handleNameChange = (event) => {
     setNewName(event.target.value);
   };
@@ -45,6 +41,7 @@ const App = () => {
           errorMessage: "the person has been deleted",
           errorType: "rejected",
         });
+        setTimeout(() => setNotification(""), 5000);
       });
     }
   };
@@ -75,6 +72,8 @@ const App = () => {
               errorMessage: `${newName} has been modified`,
               errorType: "accepted",
             });
+            setTimeout(() => setNotification(""), 5000);
+
           })
           .catch((error) => {
             setNotification({
@@ -82,19 +81,28 @@ const App = () => {
               errorType: "rejected",
             });
             setPersons(persons.filter((p) => p.name !== newName));
+            setTimeout(() => setNotification(""), 5000);
           });
       }
     } else {
-      personServices.create(personObject).then((newPerson) => {
+      personServices
+      .create(personObject)
+      .then((newPerson) => {
         setPersons(persons.concat(newPerson));
         setNotification({
           errorMessage: `${newName} has been added`,
           errorType: "accepted",
         });
-
-        // setTimeout(() => setNotification(''), 5000);
+        setTimeout(() => setNotification(""), 5000);
         // setNewName("");
         // setNewNumber("");
+      })
+      .catch((error) => {
+        setNotification({
+          errorMessage: error.response.data.error,
+          errorType: "rejected",
+        });
+        setTimeout(() => setNotification(""), 5000);
       });
     }
   };
