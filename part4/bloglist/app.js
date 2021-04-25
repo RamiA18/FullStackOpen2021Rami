@@ -1,3 +1,9 @@
+// other scripts
+//   "start": "node index.js",
+// "dev": "nodemon index.js",
+// "test": "jest --verbose",
+
+
 const config = require('./utils/config')
 const express = require('express')
 const app = express()

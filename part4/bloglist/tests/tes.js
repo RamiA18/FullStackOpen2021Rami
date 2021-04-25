@@ -1,4 +1,4 @@
-const listHelper = require("../utils/list_helper.js")
+const _ = require('lodash');
 const blogs = [
     {
       _id: '5a422a851b54a676234d17f7',
@@ -16,7 +16,23 @@ const blogs = [
         'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
       likes: 5,
       __v: 0,
-    },
+    },    {
+        _id: '5a422aa71ttba676234d17f8',
+        title: 'Go To tttttStatement Considered Harmful',
+        author: 'Edsger W. Dijkstra',
+        url:
+          'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+        likes: 5,
+        __v: 0,
+      },    {
+        _id: '5a434aa71b54a676234d17f8',
+        title: 'Go To Stl;llatement Considered Harmful',
+        author: 'Edsger W. Dijkstra',
+        url:
+          'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
+        likes: 5,
+        __v: 0,
+      },
     {
       _id: '5a422b3a1b54a676234d17f9',
       title: 'Canonical string reduction',
@@ -53,61 +69,38 @@ const blogs = [
     },
   ]
 
-  const oneBlog = [blogs[0]]
+const apple = _.groupBy(blogs, 'author')
+const tryout = _.orderBy(apple, 'length', ['desc']);
 
 
 
-test('dummy returns one', () => {
-    const blogs = []
-  
-    const result = listHelper.dummy(blogs)
-    expect(result).toBe(1)
-  });
 
 
 
-  describe("total likes", () => {
-      test("bigger list test calculated right" , () => {
-          expect(listHelper.totalLikes(blogs)).toBe(36)
-      })
-      test("empty list should give 0 likes", () => {
-          expect(listHelper.totalLikes([])).toBe(0)
-      })
-      test("one item blog array should give the number of likes of that blog", () => {
-          expect(listHelper.totalLikes(oneBlog)).toBe(7)
-      })
-  }) 
 
-  describe("Favourite Blog Post", () => {
-    test("Found the post with highest amount of likes" , () => {
-        expect(listHelper.favouriteBlog(blogs)).toEqual(12)
-    })
-}) 
+const applee = _.groupBy(blogs, 'author')
 
 
-describe("Most Likes ", () => {
-    test("Found the post with highest amount of likes" , () => {
-        expect(listHelper.favouriteBlog(blogs)).toEqual(12)
-    })
-}) 
+const blogsByLikes = _.mapValues(applee,(blogs) => blogs.reduce((sum,blog) => sum += blog.likes,0))
 
 
-describe("Most liked author ", () => {
-    test("found the most liked author" , () => {
-        expect(listHelper.mostLikes(blogs)).toEqual({
-			author: "Edsger W. Dijkstra",
-			likes: 17
-		})
-    })
-}) 
+const mostLikedAuthor = _.toPairs(blogsByLikes)
+const test = _.reduce(mostLikedAuthor, (a, b) => a[1] > b[1] ? a : b)
 
-describe("Most active author ", () => {
-    test("found author with most blogposts" , () => {
-        expect(listHelper.mostBlogs(blogs)).toEqual({
-			author: "Robert C. Martin",
-			blogs: 3
-		})
-    })
-}) 
+
+
+
+console.log(test)
+
+
+// console.log("hey")
+// console.log(tryout)
+
+
+
+
+
+
+
 
 
