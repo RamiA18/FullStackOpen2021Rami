@@ -26,12 +26,12 @@ blogsRouter.post('/', async (req, res, next) => {
     title: req.body.title,
     author: req.body.author,
     url: req.body.url,
-    likes: req.body.likes
+    likes: req.body.likes || 0
   })
 
   try {
     const savedBlog = await blog.save()
-    response.json(savedBlog.toJSON())
+    res.json(savedBlog.toJSON())
   } catch(exception) {
     next(exception)
   }
@@ -46,21 +46,39 @@ blogsRouter.delete('/:id', async (req, res, next) => {
   }
 })
 
-blogsRouter.put('/:id', (req, res, next) => {
-  const body = req.body
+blogsRouter.put('/:id', async (req, res, next) => {
+    const body = req.body
+    const blog = {
+      title: body.title,
+      author: body.author,
+      url: body.url,
+      likes: body.likes || 0
+    }
+  try {
+    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, blog, { new: true })
+    res.json(updatedBlog)
 
-  const blog = {
-    title: body.title,
-    author: body.author,
-    url: body.url,
-    likes: body.likes
+  } catch(exception) {
+    next(exception)
   }
-
-  Blog.findByIdAndUpdate(req.params.id, blog, { new: true })
-    .then(updatedBlog => {
-      res.json(updatedBlog)
-    })
-    .catch(error => next(error))
 })
+
+
+// blogsRouter.put('/:id', (req, res, next) => {
+//   const body = req.body
+
+//   const blog = {
+//     title: body.title,
+//     author: body.author,
+//     url: body.url,
+//     likes: body.likes
+//   }
+
+//   Blog.findByIdAndUpdate(req.params.id, blog, { new: true })
+//     .then(updatedBlog => {
+//       res.json(updatedBlog)
+//     })
+//     .catch(error => next(error))
+// })
 
 module.exports = blogsRouter
