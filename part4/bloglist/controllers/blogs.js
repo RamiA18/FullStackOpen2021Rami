@@ -1,19 +1,23 @@
 const blogsRouter = require('express').Router()
-const { response } = require('../app.js')
+// const { res } = require('../app.js')
 const Blog = require('../models/blog.js')
 
 blogsRouter.get('/', async (req, res) => {
+  try{
   const blogs = await Blog.find({})
     res.json(blogs.map(blog => blog.toJSON()))
+} catch (exception) {
+  next(exception)
+}
 })
 
 blogsRouter.get('/:id', async (req, res, next) => {
   try {
     const blog = await Blog.findById(req.params.id)
     if (blog) {
-      response.json(blog.toJSON())
+      res.json(blog.toJSON())
     } else {
-      response.status(404).end()
+      res.status(404).end()
     }
   } catch (exception) {
     next(exception)
@@ -64,7 +68,7 @@ blogsRouter.put('/:id', async (req, res, next) => {
 })
 
 
-// blogsRouter.put('/:id', (req, res, next) => {
+// blogsRouter.put('/:id', (req, respons, next) => {
 //   const body = req.body
 
 //   const blog = {
@@ -76,7 +80,7 @@ blogsRouter.put('/:id', async (req, res, next) => {
 
 //   Blog.findByIdAndUpdate(req.params.id, blog, { new: true })
 //     .then(updatedBlog => {
-//       res.json(updatedBlog)
+//       respons.json(updatedBlog)
 //     })
 //     .catch(error => next(error))
 // })
