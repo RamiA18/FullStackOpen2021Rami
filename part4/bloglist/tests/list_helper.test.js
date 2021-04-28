@@ -52,62 +52,59 @@ const blogs = [
       __v: 0,
     },
   ]
+const oneBlog = [blogs[0]]
 
-  const oneBlog = [blogs[0]]
-
-
-
-test('dummy returns one', () => {
+describe("Dummy Test", () => {
+  test('dummy returns one', () => {
     const blogs = []
-  
     const result = listHelper.dummy(blogs)
     expect(result).toBe(1)
   });
+}) 
 
 
+describe("total likes", () => {
+  test("bigger list test calculated right" , () => {
+    expect(listHelper.totalLikes(blogs)).toBe(36)
+  })
+    test("empty list should give 0 likes", () => {
+    expect(listHelper.totalLikes([])).toBe(0)
+  })
+    test("one item blog array should give the number of likes of that blog", () => {
+    expect(listHelper.totalLikes(oneBlog)).toBe(7)
+  })
+}) 
 
-  describe("total likes", () => {
-      test("bigger list test calculated right" , () => {
-          expect(listHelper.totalLikes(blogs)).toBe(36)
-      })
-      test("empty list should give 0 likes", () => {
-          expect(listHelper.totalLikes([])).toBe(0)
-      })
-      test("one item blog array should give the number of likes of that blog", () => {
-          expect(listHelper.totalLikes(oneBlog)).toBe(7)
-      })
-  }) 
-
-  describe("Favourite Blog Post", () => {
-    test("Found the post with highest amount of likes" , () => {
-        expect(listHelper.favouriteBlog(blogs)).toEqual(12)
-    })
+describe("Favourite Blog Post", () => {
+  test("Found the post with highest amount of likes" , () => {
+    expect(listHelper.favouriteBlog(blogs)).toEqual(12)
+  })
 }) 
 
 
 describe("Most Likes ", () => {
-    test("Found the post with highest amount of likes" , () => {
-        expect(listHelper.favouriteBlog(blogs)).toEqual(12)
-    })
+  test("Found the post with highest amount of likes" , () => {
+    expect(listHelper.favouriteBlog(blogs)).toEqual(12)
+  })
 }) 
 
 
 describe("Most liked author ", () => {
-    test("found the most liked author" , () => {
-        expect(listHelper.mostLikes(blogs)).toEqual({
+  test("found the most liked author" , () => {
+    expect(listHelper.mostLikes(blogs)).toEqual({
 			author: "Edsger W. Dijkstra",
 			likes: 17
 		})
-    })
+  })
 }) 
 
 describe("Most active author ", () => {
-    test("found author with most blogposts" , () => {
-        expect(listHelper.mostBlogs(blogs)).toEqual({
+  test("found author with most blogposts" , () => {
+    expect(listHelper.mostBlogs(blogs)).toEqual({
 			author: "Robert C. Martin",
 			blogs: 3
 		})
-    })
+  })
 }) 
 
 
