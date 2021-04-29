@@ -1,19 +1,13 @@
-// const mongoose = require('mongoose')
-// const supertest = require('supertest')
-// const app = require('../app.js')
-// const Blog = require('../models/blog.js')
-// const api = supertest(app)
-
-const mongoose = require('mongoose')
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
-const supertest = require('supertest')
-const app = require('../app')
-const helper = require('../utils/test_helper')
-const api = supertest(app)
-const User = require('../models/user')
-const Blog = require('../models/blog')
-const { initial } = require('lodash')
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const supertest = require("supertest");
+const app = require("../app");
+const helper = require("../utils/test_helper");
+const api = supertest(app);
+const User = require("../models/user");
+const Blog = require("../models/blog");
+const { initial } = require("lodash");
 
 // const initialBlogs = [
 //     {
@@ -34,177 +28,164 @@ const { initial } = require('lodash')
 //       __v: 0,
 //     },
 //   ]
-let token
+let token;
 
-beforeAll (async () => {
-  await User.deleteMany({})
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash("apassword", saltRounds)
-  const user = new User({ username: 'root', passwordHash  })
-  await user.save()
+beforeAll(async () => {
+  await User.deleteMany({});
+  const saltRounds = 10;
+  const passwordHash = await bcrypt.hash("apassword", saltRounds);
+  const user = new User({ username: "root", passwordHash });
+  await user.save();
 
   const login = await api
     .post("/api/login")
-    .send({username : "root", password: "apassword"})
-    .set("Accept","application/json")
-    .expect("Content-Type",/application\/json/)
-    token = login.body.token
-
-
-})
-
+    .send({ username: "root", password: "apassword" })
+    .set("Accept", "application/json")
+    .expect("Content-Type", /application\/json/);
+  token = login.body.token;
+});
 
 beforeEach(async () => {
-    await Blog.deleteMany({})
-    const blogObjects = helper.initialBlogs
-      .map(blog => new Blog(blog))
-    const promiseArray = blogObjects.map(blog => blog.save())
-    await Promise.all(promiseArray)
-    })
-
-    
+  await Blog.deleteMany({});
+  const blogObjects = helper.initialBlogs.map((blog) => new Blog(blog));
+  const promiseArray = blogObjects.map((blog) => blog.save());
+  await Promise.all(promiseArray);
+});
 
 describe("Fetching Blog(s)", () => {
-test ('blogs return as json' , async () => {
+  test("blogs return as json", async () => {
     await api
-    .get('/api/blogs')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
-})
+      .get("/api/blogs")
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
+  });
 
-test('have a unique identifier named "id"', async () => {
-    const response = await api.get('/api/blogs')
-    expect(response.body[0].id).toBeDefined()
-  })
+  test('have a unique identifier named "id"', async () => {
+    const response = await api.get("/api/blogs");
+    expect(response.body[0].id).toBeDefined();
+  });
 
-test('a single Blog can be requested', async () => {
-  const AllBlogs = await helper.blogsInDb()
-  const aBlogPost = AllBlogs[0]
-  const response = await api
-    .get(`/api/blogs/${aBlogPost.id}`)
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
-    expect(response.body.id).toEqual(aBlogPost.id)
-  })
-})
-
+  test("a single Blog can be requested", async () => {
+    const AllBlogs = await helper.blogsInDb();
+    const aBlogPost = AllBlogs[0];
+    const response = await api
+      .get(`/api/blogs/${aBlogPost.id}`)
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
+    expect(response.body.id).toEqual(aBlogPost.id);
+  });
+});
 
 describe("adding New Blog Successfully", () => {
-  test('Added new blog', async () => {
-
+  test("Added new blog", async () => {
     // const login = await api
     // .post("/api/login")
     // .send({username : "root", password: "apassword"})
     // .set("Accept","application/json")
     // .expect("Content-Type",/application\/json/)
 
-    const firstBlogArray = await helper.blogsInDb()
-    const firstLength = firstBlogArray.length
+    const firstBlogArray = await helper.blogsInDb();
+    const firstLength = firstBlogArray.length;
 
     const newBlog = {
-      title: 'Random1 Title',
-      author: 'Random eAuthor',
-      url: 'https://randomWebsite.com',
+      title: "Random1 Title",
+      author: "Random eAuthor",
+      url: "https://randomWebsite.com",
       likes: 5,
-    }
+    };
     await api
-      .post('/api/blogs')
+      .post("/api/blogs")
       .send(newBlog)
-      .set('Authorization', `bearer ${token}`)
+      .set("Authorization", `bearer ${token}`)
       .expect(200)
-      .expect('Content-Type', /application\/json/)
-    const secondBlogArray = await helper.blogsInDb()
-    const secondLength = secondBlogArray.length
-    expect(secondLength).toEqual(firstLength + 1)
-  })
+      .expect("Content-Type", /application\/json/);
+    const secondBlogArray = await helper.blogsInDb();
+    const secondLength = secondBlogArray.length;
+    expect(secondLength).toEqual(firstLength + 1);
+  });
 
-  test('likes equal 0 if undefined', async () => {
-
+  test("likes equal 0 if undefined", async () => {
     // const login = await api
     // .post("/api/login")
     // .send({username : "root", password: "apassword"})
     // .set("Accept","application/json")
     // .expect("Content-Type",/application\/json/)
 
-    const initialBlogs = await helper.blogsInDb()
+    const initialBlogs = await helper.blogsInDb();
     const newBlog = {
-      title: 'Another Random Example',
-      author: 'Another JohnSmith',
-      url: 'http://www.AotherRandom.com',
-    }
+      title: "Another Random Example",
+      author: "Another JohnSmith",
+      url: "http://www.AotherRandom.com",
+    };
 
-     const response = await api
-     .post('/api/blogs')
-     .send(newBlog)
-     .set('Authorization', `bearer ${token}`)
-     .expect(200)
-     .expect('Content-Type', /application\/json/)
+    const response = await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .set("Authorization", `bearer ${token}`)
+      .expect(200)
+      .expect("Content-Type", /application\/json/);
 
-      // const finalBlogs = await helper.blogsInDb()
-      // expect(finalBlogs.length).toEqual(initialBlogs.length + 1)
-  
-    expect(response.body.likes).toBe(0)
-  })
+    // const finalBlogs = await helper.blogsInDb()
+    // expect(finalBlogs.length).toEqual(initialBlogs.length + 1)
 
-// test('new blog added', async () => {
-//     const firstResponse = await api.get('/api/blogs')
-//     const expectation = firstResponse.body.length + 1
-//     const newBlog = {
-//         title: 'Random Title',
-//         author: 'Random eAuthor',
-//         url: 'https://randomWebsite.com',
-//         likes: 5,
-//       }
+    expect(response.body.likes).toBe(0);
+  });
 
-//     await api
-//       .post('/api/blogs')
-//       .send(newBlog)
-//       .expect(200)
-//       .expect('Content-Type', /application\/json/)
-//       const secondResponse = await api.get('/api/blogs')
-//       const resultLength = secondResponse.body.length
-//       expect(resultLength).toEqual(expectation)
-//   })
-})
+  // test('new blog added', async () => {
+  //     const firstResponse = await api.get('/api/blogs')
+  //     const expectation = firstResponse.body.length + 1
+  //     const newBlog = {
+  //         title: 'Random Title',
+  //         author: 'Random eAuthor',
+  //         url: 'https://randomWebsite.com',
+  //         likes: 5,
+  //       }
 
-
+  //     await api
+  //       .post('/api/blogs')
+  //       .send(newBlog)
+  //       .expect(200)
+  //       .expect('Content-Type', /application\/json/)
+  //       const secondResponse = await api.get('/api/blogs')
+  //       const resultLength = secondResponse.body.length
+  //       expect(resultLength).toEqual(expectation)
+  //   })
+});
 
 describe("Errors testings", () => {
-  test('error 400 returned if title is missing', async () => {
-    const initialBlogs = await helper.blogsInDb()
+  test("error 400 returned if title is missing", async () => {
+    const initialBlogs = await helper.blogsInDb();
     const newBlog = {
-      author: 'Another JohnSmith',
-      url: "www.awebsite.com"
-    }
-     const response = await api
-      .post('/api/blogs')
+      author: "Another JohnSmith",
+      url: "www.awebsite.com",
+    };
+    await api
+      .post("/api/blogs")
       .send(newBlog)
-      .set('Authorization', `bearer ${token}`)
+      .set("Authorization", `bearer ${token}`)
       .expect(400)
-      .expect('Content-Type', "application/json; charset=utf-8")
-      const finalBlogs = await helper.blogsInDb()
-      expect(initialBlogs.length).toEqual(finalBlogs.length)
-  })
+      .expect("Content-Type", "application/json; charset=utf-8");
+    const finalBlogs = await helper.blogsInDb();
+    expect(initialBlogs.length).toEqual(finalBlogs.length);
+  });
 
-  test('error 400 returned if url is missing', async () => {
-    const initialBlogs = await helper.blogsInDb()
+  test("error 400 returned if url is missing", async () => {
+    const initialBlogs = await helper.blogsInDb();
     const newBlog = {
-      title: 'Another JohnSmith',
-      author: 'Another JohnSmith',
-    }
-    const response = await api
-      .post('/api/blogs')
+      title: "Another JohnSmith",
+      author: "Another JohnSmith",
+    };
+    await api
+      .post("/api/blogs")
       .send(newBlog)
-      .set('Authorization', `bearer ${token}`)
+      .set("Authorization", `bearer ${token}`)
       .expect(400)
-      .expect('Content-Type', "application/json; charset=utf-8")
-      const finalBlogs = await helper.blogsInDb()
-      expect(initialBlogs.length).toEqual(finalBlogs.length)
-  })
-})
-
+      .expect("Content-Type", "application/json; charset=utf-8");
+    const finalBlogs = await helper.blogsInDb();
+    expect(initialBlogs.length).toEqual(finalBlogs.length);
+  });
+});
 
 afterAll(() => {
-    mongoose.connection.close()
-
-})
+  mongoose.connection.close();
+});
