@@ -30,8 +30,6 @@ blogsRouter.post("/", async (req, res) => {
     return res.status(400).json({ error: "title or url is missing" });
   }
 
-  // const user = await User.findById(decodedToken.userId)
-  // console.log(decodedToken)
   const blog = new Blog({
     title: req.body.title,
     author: req.body.author,
@@ -42,7 +40,6 @@ blogsRouter.post("/", async (req, res) => {
   const savedBlog = await blog.save();
   user.blogs = user.blogs.concat(savedBlog._id);
   await user.save();
-  // res.status(201).json(savedBlog.toJSON())
   res.json(savedBlog.toJSON());
 });
 
@@ -64,28 +61,6 @@ blogsRouter.delete("/:id", async (req, res) => {
   res.status(204).end();
 });
 
-// blogsRouter.delete('/:id', async (req, res) => {
-
-//   const token = getTokenFrom(req)
-//   const decodedToken = jwt.verify(token, process.env.SECRET)
-
-//   if (!token || !decodedToken) {
-//       return res.status(401).json({ error: 'token missing or invalid' })
-//     }
-
-//     const blog = await Blog.findById(req.params.id)
-//     if (blog.user.toString() === req.decodedToken.userId.toString()) {
-//       await Blog.findByIdAndRemove(req.params.id)
-//       res.status(204).end()
-//     }
-//     res
-//     .status(204)
-//     .json ({ error: 'You are not authorized to delete this blog' })
-
-//     // await Blog.findByIdAndRemove(req.params.id)
-//     // res.status(204).end()
-//   })
-
 blogsRouter.put("/:id", async (req, res) => {
   const body = req.body;
   const blog = {
@@ -96,22 +71,5 @@ blogsRouter.put("/:id", async (req, res) => {
   });
   res.status(200).json(updatedBlog);
 });
-
-// blogsRouter.put('/:id', (req, respons, next) => {
-//   const body = req.body
-
-//   const blog = {
-//     title: body.title,
-//     author: body.author,
-//     url: body.url,
-//     likes: body.likes
-//   }
-
-//   Blog.findByIdAndUpdate(req.params.id, blog, { new: true })
-//     .then(updatedBlog => {
-//       respons.json(updatedBlog)
-//     })
-//     .catch(error => next(error))
-// })
 
 module.exports = blogsRouter;

@@ -8,26 +8,6 @@ const api = supertest(app);
 const User = require("../models/user");
 const Blog = require("../models/blog");
 const { initial } = require("lodash");
-
-// const initialBlogs = [
-//     {
-//       _id: '5a422a851b54a676234d17f7',
-//       title: 'React patterns',
-//       author: 'Michael Chan',
-//       url: 'https://reactpatterns.com/',
-//       likes: 7,
-//       __v: 0,
-//     },
-//     {
-//       _id: '5a422aa71b54a676234d17f8',
-//       title: 'Go To Statement Considered Harmful',
-//       author: 'Edsger W. Dijkstra',
-//       url:
-//         'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-//       likes: 5,
-//       __v: 0,
-//     },
-//   ]
 let token;
 
 beforeAll(async () => {
@@ -78,12 +58,6 @@ describe("Fetching Blog(s)", () => {
 
 describe("adding New Blog Successfully", () => {
   test("Added new blog", async () => {
-    // const login = await api
-    // .post("/api/login")
-    // .send({username : "root", password: "apassword"})
-    // .set("Accept","application/json")
-    // .expect("Content-Type",/application\/json/)
-
     const firstBlogArray = await helper.blogsInDb();
     const firstLength = firstBlogArray.length;
 
@@ -105,12 +79,6 @@ describe("adding New Blog Successfully", () => {
   });
 
   test("likes equal 0 if undefined", async () => {
-    // const login = await api
-    // .post("/api/login")
-    // .send({username : "root", password: "apassword"})
-    // .set("Accept","application/json")
-    // .expect("Content-Type",/application\/json/)
-
     const initialBlogs = await helper.blogsInDb();
     const newBlog = {
       title: "Another Random Example",
@@ -125,31 +93,8 @@ describe("adding New Blog Successfully", () => {
       .expect(200)
       .expect("Content-Type", /application\/json/);
 
-    // const finalBlogs = await helper.blogsInDb()
-    // expect(finalBlogs.length).toEqual(initialBlogs.length + 1)
-
     expect(response.body.likes).toBe(0);
   });
-
-  // test('new blog added', async () => {
-  //     const firstResponse = await api.get('/api/blogs')
-  //     const expectation = firstResponse.body.length + 1
-  //     const newBlog = {
-  //         title: 'Random Title',
-  //         author: 'Random eAuthor',
-  //         url: 'https://randomWebsite.com',
-  //         likes: 5,
-  //       }
-
-  //     await api
-  //       .post('/api/blogs')
-  //       .send(newBlog)
-  //       .expect(200)
-  //       .expect('Content-Type', /application\/json/)
-  //       const secondResponse = await api.get('/api/blogs')
-  //       const resultLength = secondResponse.body.length
-  //       expect(resultLength).toEqual(expectation)
-  //   })
 });
 
 describe("Errors testings", () => {

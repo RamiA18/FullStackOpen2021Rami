@@ -1,8 +1,3 @@
-// other scripts
-//   "start": "node index.js",
-// "dev": "nodemon index.js",
-// "test": "jest --verbose",
-
 const config = require("./utils/config");
 const express = require("express");
 require("express-async-errors");
@@ -40,8 +35,12 @@ app.use(middleware.userExtractor);
 app.use("/api/login", loginRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/blogs", blogsRouter);
-
 app.use(middleware.unknownEndpoint);
 app.use(middleware.errorHandler);
 
 module.exports = app;
+
+// other scripts
+// "start": "node index.js",
+// "dev": "nodemon index.js",
+// "test": "jest --verbose",
