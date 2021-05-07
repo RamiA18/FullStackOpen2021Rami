@@ -14,9 +14,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState("")
-  const [author, setAuthor] = useState("")
-  const [url, setUrl] = useState("")
 
   const blogFormRef = useRef()
 
@@ -31,8 +28,8 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogService.setToken(user.token)
+       setUser(user)
+       blogService.setToken(user.token)
     }
   }, [])
 
@@ -103,7 +100,7 @@ const App = () => {
       .create(blogObject)
       .then(returnedBlog => {
      setBlogs(blogs.concat(returnedBlog))
-      setErrorMessage(`a new blog ${title} has been added `)
+      setErrorMessage(`a new blog has been added `)
       setTimeout(() => {
       setErrorMessage
   (null)
@@ -150,7 +147,7 @@ const App = () => {
 
   const loginForm = () =>{
   return (
-    <Togglable buttonLabel="log in">
+    <Togglable buttonLabel="log in" cancleButtonLabel="Cancel">
     <LoginForm handleSubmit={handleLogin} username={username} handleUsernameChange={handleUsernameChange} password={password} handlePasswordChange={handlePasswordChange} />
     </Togglable>
 
@@ -159,12 +156,33 @@ const App = () => {
 
   const blogForm = () =>{
     return (
-      <Togglable buttonLabel="addBlog" ref={blogFormRef}>
+      <Togglable buttonLabel="Add Blog" cancleButtonLabel="Cancel" ref={blogFormRef}>
       <BlogForm createBlogPost={addBlog} />
       </Togglable>
-  
     )
     }
+
+    const handleLike  = async (blog) => {
+      const updatedBlog = { ...blog, likes: blog.likes + 1 }
+      blogService
+      .update(blog.id, updatedBlog)
+      .then(setBlogs(blogs.map(blog => blog.id === updatedBlog.id ? updatedBlog : blog)))
+    }
+
+    const handleDelete = async (blog) => {
+      const confirmation = window.confirm('Are you sure you want to delete blog post?')
+      const BlogToDelete = blog.id
+      if (confirmation) {
+        await blogService
+        .remove(BlogToDelete)
+        setBlogs(blogs.filter(b => b.id !== blog.id))
+        setErrorMessage("post has been deleted")
+        setTimeout(() => {
+        setErrorMessage
+    (null)
+        }, 5000)
+    }
+  }
 
   return (
   <div className="container">
@@ -177,10 +195,14 @@ const App = () => {
       :
       <div>
       <p>{user.name} logged-in <button className="btn btn-danger btn-sm" onClick={handleLogOut}>Logout</button> </p>
-
+      <br />
       {blogForm()}
-      {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+      {blogs
+      .sort((a, b) => {
+        return b.likes - a.likes;
+      })
+      .map(blog =>
+        <Blog key={blog.id} blog={blog} addLike={handleLike} deleteClickFuntion={handleDelete} user={user}/>
       )}
       </div>
     }

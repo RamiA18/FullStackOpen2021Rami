@@ -29,8 +29,8 @@ const BlogForm = ({createBlogPost}) => {
     return (
         <div>
         <form onSubmit={addBlog}>
-      <div>
-        Title:
+      <div className="m-1">
+        Title: 
       <input
           type="text"
           value={title}
@@ -38,8 +38,8 @@ const BlogForm = ({createBlogPost}) => {
           onChange={handleTitleChange}
         />
         </div>
-        <div>
-          Author:
+        <div className="m-1">
+          Author: 
         <input
           type="text"
           value={author}
@@ -47,8 +47,8 @@ const BlogForm = ({createBlogPost}) => {
           onChange={handleAuthorChange}
         />
         </div>
-        <div>
-          URL:
+        <div className="m-1">
+          URL: 
         <input
           type="text"
           value={url}
@@ -56,7 +56,7 @@ const BlogForm = ({createBlogPost}) => {
           onChange={handleUrlChange}
         />
         </div>
-      <button className="btn btn-secondary btn-sm" type="submit">save</button>
+      <button className="btn btn-secondary btn-sm m-1" type="submit">save</button>
     </form>  
     </div>
     )
