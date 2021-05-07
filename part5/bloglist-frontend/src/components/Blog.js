@@ -2,20 +2,6 @@ import React from "react";
 import Togglable from "./Togglable.js";
 
 const Blog = ({ blog, addLike, deleteClickFuntion, user }) => {
-  // const removeButton = () => {
-  //   if (user && user.username === blog.user.username) {
-  //     return <button className= "btn btn-danger btn-sm mx-1" onClick={() => {deleteClickFuntion(blog)}}> delete </button>
-  //   } else {
-  //     return null
-  //   }
-  // }
-
-  // const removeButton = async () => {
-  //   if (user.username && blog.user.username) {
-  //    return (<p>"hello"</p>)
-  // }
-  // }
-
   const removeButton = () => {
     if (user && blog && blog.user.username) {
       if (blog.user.username === user.username) {

@@ -63,27 +63,6 @@ const App = () => {
       }, 5000);
     }
   };
-  // const HandleAddingBlog = (event) => {
-  //   event.preventDefault()
-  //   const blogObject = {
-  //     title: title,
-  //     author: author,
-  //     url: url
-  //   }
-  //   blogService
-  //   .create(blogObject)
-  //   .then(returnedBlog => {
-  //     setBlogs(blogs.concat(returnedBlog))
-  //     setErrorMessage(`a new blog ${title} has been added `)
-  //     setTimeout(() => {
-  //     setErrorMessage
-  // (null)
-  //     }, 5000)
-  //     setTitle('')
-  //     setAuthor('')
-  //     setUrl('')
-  //   })
-  // }
 
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility();
@@ -95,40 +74,7 @@ const App = () => {
       }, 5000);
     });
   };
-  // const blogForm = () => (
-  //   <Togglable buttonLabel="Add New Blog">
-  //   <form onSubmit={HandleAddingBlog}>
-  //     <div>
-  //       Title:
-  //     <input
-  //         type="text"
-  //         value={title}
-  //         name="title"
-  //         onChange={({ target }) => setTitle(target.value)}
-  //       />
-  //       </div>
-  //       <div>
-  //         Author:
-  //       <input
-  //         type="text"
-  //         value={author}
-  //         name="title"
-  //         onChange={({ target }) => setAuthor(target.value)}
-  //       />
-  //       </div>
-  //       <div>
-  //         URL:
-  //       <input
-  //         type="text"
-  //         value={url}
-  //         name="title"
-  //         onChange={({ target }) => setUrl(target.value)}
-  //       />
-  //       </div>
-  //     <button className="btn btn-secondary btn-sm" type="submit">save</button>
-  //   </form>
-  //   </Togglable>
-  // )
+
   const loginForm = () => {
     return (
       <Togglable buttonLabel="log in" cancleButtonLabel="Cancel">
