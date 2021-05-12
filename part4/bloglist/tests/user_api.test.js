@@ -9,8 +9,8 @@ const api = supertest(app);
 
 beforeAll(async () => {
   await User.deleteMany({});
-  const passwordHash = await bcrypt.hash("notagoodpassword", 10);
-  const user = new User({ username: "root", passwordHash });
+  const passwordHash = await bcrypt.hash("goodpassword", 10);
+  const user = new User({ username: "rooti", passwordHash });
   await user.save();
 });
 

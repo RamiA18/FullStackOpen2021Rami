@@ -3,7 +3,7 @@ import Togglable from "./Togglable.js";
 
 const Blog = ({ blog, addLike, deleteClickFuntion, user }) => {
   const removeButton = () => {
-    if (user && blog && blog.user.username) {
+    if (user && blog && blog.user) {
       if (blog.user.username === user.username) {
         return (
           <button
@@ -23,28 +23,32 @@ const Blog = ({ blog, addLike, deleteClickFuntion, user }) => {
   return (
     <div className="card m-2">
       <div className="card-body">
-        <h5>{blog.title}</h5>
-        <Togglable buttonLabel="View Info" cancleButtonLabel="Hide">
-          <p>
-            <span style={{ fontWeight: "bold" }}>Author: </span>{" "}
-            <span> {blog.author} </span>
-          </p>
+        <h5 className="blogTitle">{blog.title}</h5>
+        <p>
+        <span style={{ fontWeight: "bold" }}>by </span>{" "}
+        <span className="blogAuthor"> {blog.author} </span>
+        </p>
+        <Togglable className="blogDetails" buttonLabel="View Info" cancleButtonLabel="Hide">
+          {/* <p>
+            <span style={{ fontWeight: "bold" }}>by </span>{" "}
+            <span className="blogAuthor"> {blog.author} </span>
+          </p> */}
           <p>
             <span style={{ fontWeight: "bold" }}>likes: </span>{" "}
-            <span> {blog.likes} </span>{" "}
+            <span className="blogLikes"> {blog.likes} </span>{" "}
             <button
-              className="btn btn-primary btn-sm"
+              className="likeButton btn btn-primary btn-sm"
               onClick={() => {
                 addLike(blog);
               }}
             >
               {" "}
-              Like{" "}
+              Add Like{" "}
             </button>
           </p>
           <p>
             <span style={{ fontWeight: "bold" }}>url: </span>{" "}
-            <span> {blog.url} </span>
+            <span className="blogUrl"> {blog.url} </span>
           </p>
           {removeButton()}
         </Togglable>
