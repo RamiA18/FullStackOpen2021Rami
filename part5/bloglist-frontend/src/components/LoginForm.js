@@ -14,6 +14,7 @@ const LoginForm = (props) => {
             name="Username"
             onChange={props.handleUsernameChange}
             className="my-1"
+            id="usernameField"
           />
         </div>
         <div>
@@ -23,9 +24,14 @@ const LoginForm = (props) => {
             value={props.password}
             onChange={props.handlePasswordChange}
             className="my-1"
+            id="passwordField"
           />
         </div>
-        <button className="btn btn-primary btn-sm m-1" type="submit">
+        <button
+          className="btn btn-primary btn-sm m-1"
+          id="loginButton"
+          type="submit"
+        >
           login
         </button>
       </form>

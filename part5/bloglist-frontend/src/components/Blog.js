@@ -25,10 +25,14 @@ const Blog = ({ blog, addLike, deleteClickFuntion, user }) => {
       <div className="card-body">
         <h5 className="blogTitle">{blog.title}</h5>
         <p>
-        <span style={{ fontWeight: "bold" }}>by </span>{" "}
-        <span className="blogAuthor"> {blog.author} </span>
+          <span style={{ fontWeight: "bold" }}>by </span>{" "}
+          <span className="blogAuthor"> {blog.author} </span>
         </p>
-        <Togglable className="blogDetails" buttonLabel="View Info" cancleButtonLabel="Hide">
+        <Togglable
+          className="blogDetails"
+          buttonLabel="View Info"
+          cancleButtonLabel="Hide"
+        >
           {/* <p>
             <span style={{ fontWeight: "bold" }}>by </span>{" "}
             <span className="blogAuthor"> {blog.author} </span>
@@ -38,6 +42,7 @@ const Blog = ({ blog, addLike, deleteClickFuntion, user }) => {
             <span className="blogLikes"> {blog.likes} </span>{" "}
             <button
               className="likeButton btn btn-primary btn-sm"
+              id="addLikeButton"
               onClick={() => {
                 addLike(blog);
               }}
