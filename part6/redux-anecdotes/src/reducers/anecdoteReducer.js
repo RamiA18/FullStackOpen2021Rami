@@ -8,7 +8,6 @@ const anecdotesAtStart = [
 ];
 
 const getId = () => (100000 * Math.random()).toFixed(0);
-
 const asObject = (anecdote) => {
   return {
     content: anecdote,
@@ -16,13 +15,8 @@ const asObject = (anecdote) => {
     votes: 0,
   };
 };
-
 const initialState = anecdotesAtStart.map(asObject);
-
 const reducer = (state = initialState, action) => {
-  console.log("state now: ", state);
-  console.log("action", action);
-
   switch (action.type) {
     case "NEW_ANECDOTE":
       return [...state, action.data];
