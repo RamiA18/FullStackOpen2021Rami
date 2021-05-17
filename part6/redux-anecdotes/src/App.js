@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import anecdoteService from "./services/anecdotes";
+import { initializeAnecdotes } from "./reducers/anecdoteReducer";
 import AnecdoteList from "./components/anecdoteList.js";
 import AnecdoteForm from "./components/anecdoteForm.js";
 import Notification from "./components/Notification.js";
@@ -6,6 +9,12 @@ import Filter from "./components/Filter.js";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
 const App = () => {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    anecdoteService
+      .getAll().then((anecdotes) => dispatch(initializeAnecdotes(anecdotes)));
+  }, [dispatch]);
+
   return (
     <div className="container">
       <div className="row">

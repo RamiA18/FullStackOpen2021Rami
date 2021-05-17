@@ -1,13 +1,17 @@
 import React from "react";
+import anecdoteService from "../services/anecdotes";
 import { useDispatch } from "react-redux";
 import { createAnecdoteAction } from "../reducers/anecdoteReducer.js";
 import { setNotification } from "../reducers/notificationReducer.js";
 
 const AnecdoteForm = () => {
+  
   const dispatch = useDispatch();
-  const handlingAddAnecdote = (event) => {
+  const handlingAddAnecdote = async (event) => {
     event.preventDefault();
     const anecdoteContent = event.target.anecdote.value;
+    const anecdote = await anecdoteService.createNew(anecdoteContent);
+
     dispatch(createAnecdoteAction(anecdoteContent));
     dispatch(
       setNotification(`A new blog post has been created: "${anecdoteContent}"`)
