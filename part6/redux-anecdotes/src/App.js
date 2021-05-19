@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import anecdoteService from "./services/anecdotes";
 import { initializeAnecdotes } from "./reducers/anecdoteReducer";
 import AnecdoteList from "./components/anecdoteList.js";
 import AnecdoteForm from "./components/anecdoteForm.js";
@@ -9,10 +8,9 @@ import Filter from "./components/Filter.js";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
 const App = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-    anecdoteService
-      .getAll().then((anecdotes) => dispatch(initializeAnecdotes(anecdotes)));
+    dispatch(initializeAnecdotes());
   }, [dispatch]);
 
   return (

@@ -1,22 +1,18 @@
 import React from "react";
 import anecdoteService from "../services/anecdotes";
 import { useDispatch } from "react-redux";
+import { connect } from "react-redux";
 import { createAnecdoteAction } from "../reducers/anecdoteReducer.js";
 import { setNotification } from "../reducers/notificationReducer.js";
 
-const AnecdoteForm = () => {
-  
-  const dispatch = useDispatch();
+// const AnecdoteForm = () => {
+const AnecdoteForm = ({ createAnecdoteAction, setNotification }) => {
   const handlingAddAnecdote = async (event) => {
     event.preventDefault();
     const anecdoteContent = event.target.anecdote.value;
-    const anecdote = await anecdoteService.createNew(anecdoteContent);
 
-    dispatch(createAnecdoteAction(anecdoteContent));
-    dispatch(
-      setNotification(`A new blog post has been created: "${anecdoteContent}"`)
-    );
-    setTimeout(() => dispatch(setNotification("")), 5000);
+    createAnecdoteAction(anecdoteContent);
+    setNotification(`A new blog post has been created: ${anecdoteContent}`, 5);
   };
 
   return (
@@ -34,4 +30,11 @@ const AnecdoteForm = () => {
   );
 };
 
-export default AnecdoteForm;
+const mapDispatchToProps = {
+  createAnecdoteAction,
+  setNotification,
+};
+
+const anecdoteFormConnected = connect(null, mapDispatchToProps)(AnecdoteForm);
+
+export default anecdoteFormConnected;

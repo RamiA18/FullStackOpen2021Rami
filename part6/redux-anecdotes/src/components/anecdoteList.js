@@ -17,11 +17,12 @@ const AnecdoteList = () => {
     dispatch(voteAction(id));
     dispatch(
       setNotification(
-        `A vote added to the following blog: "${anecdoteVoted.content}"`
+        `A vote added to the following blog: "${anecdoteVoted.content}"`,
+        5
       )
     );
-    setTimeout(() => dispatch(setNotification("")), 5000);
   };
+
   return (
     <div>
       {anecdotes.map((anecdote) => (

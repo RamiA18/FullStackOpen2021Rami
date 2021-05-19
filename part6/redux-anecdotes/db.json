@@ -1,34 +1,164 @@
 {
-    "anecdotes":[
-      {
-        "content": "If it hurts, do it more often",
-        "id": "47145",
-        "votes": 0
-      },
-      {
-        "content": "Adding manpower to a late software project makes it later!",
-        "id": "21149",
-        "votes": 0
-      },
-      {
-        "content": "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
-        "id": "69581",
-        "votes": 0
-      },
-      {
-        "content": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
-        "id": "36975",
-        "votes": 0
-      },
-      {
-        "content": "Premature optimization is the root of all evil.",
-        "id": "25170",
-        "votes": 0
-      },
-      {
-        "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
-        "id": "98312",
-        "votes": 0
-      }
-    ]
-  }
+  "anecdotes": [
+    {
+      "content": "If it hurts, do it more often",
+      "id": "47145",
+      "votes": 39
+    },
+    {
+      "content": "Adding manpower to a late software project makes it later!",
+      "id": "21149",
+      "votes": 24
+    },
+    {
+      "content": "The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.",
+      "id": "69581",
+      "votes": 14
+    },
+    {
+      "content": "Any fool can write code that a computer can understand. Good programmers write code that humans can understand.",
+      "id": "36975",
+      "votes": 8
+    },
+    {
+      "content": "Premature optimization is the root of all evil.",
+      "id": "25170",
+      "votes": 58
+    },
+    {
+      "content": "Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.",
+      "id": "98312",
+      "votes": 8
+    },
+    {
+      "content": "test",
+      "votes": 1,
+      "id": "g6lt9pg"
+    },
+    {
+      "content": "ttt",
+      "votes": 0,
+      "id": "oRKLOwA"
+    },
+    {
+      "content": "t",
+      "votes": 0,
+      "id": "BTzBHW-"
+    },
+    {
+      "content": "tttttt",
+      "votes": 0,
+      "id": "O91HIh5"
+    },
+    {
+      "content": "rrr",
+      "votes": 0,
+      "id": "1SZJP4T"
+    },
+    {
+      "content": "qdtion",
+      "votes": 0,
+      "id": "8Pkz0Nu"
+    },
+    {
+      "content": "tttttt",
+      "votes": 0,
+      "id": "-5vUiXR"
+    },
+    {
+      "content": "rrrrr",
+      "votes": 0,
+      "id": "bzYxF7m"
+    },
+    {
+      "content": "teee",
+      "votes": 0,
+      "id": "7RhdGOH"
+    },
+    {
+      "content": "vfffd",
+      "votes": 0,
+      "id": "XuYCS33"
+    },
+    {
+      "content": "rrr",
+      "votes": 0,
+      "id": "q2ByTm7"
+    },
+    {
+      "content": "rrrt",
+      "votes": 0,
+      "id": "PJUkiwh"
+    },
+    {
+      "content": "fffff",
+      "votes": 0,
+      "id": "Rg1VWDF"
+    },
+    {
+      "content": "ffffff",
+      "votes": 0,
+      "id": "rBzKeZj"
+    },
+    {
+      "content": "fffffffff",
+      "votes": 0,
+      "id": "pm27QNX"
+    },
+    {
+      "content": "ttttt",
+      "votes": 0,
+      "id": "9KG2Fil"
+    },
+    {
+      "content": "trst",
+      "votes": 0,
+      "id": "Svee-Li"
+    },
+    {
+      "content": "trss",
+      "votes": 0,
+      "id": "1oFC-r4"
+    },
+    {
+      "content": "ttttr",
+      "votes": 0,
+      "id": "MNMuDAs"
+    },
+    {
+      "content": "eerer",
+      "votes": 0,
+      "id": "NQHyz09"
+    },
+    {
+      "content": "test3434",
+      "votes": 0,
+      "id": "noOaRvj"
+    },
+    {
+      "content": "ttt",
+      "votes": 0,
+      "id": "YBktlrk"
+    },
+    {
+      "content": "tttt",
+      "votes": 0,
+      "id": "ytTFGtd"
+    },
+    {
+      "content": "tttt",
+      "votes": 0,
+      "id": "9RS8fVL"
+    },
+    {
+      "content": "ttttt",
+      "votes": 0,
+      "id": "k7imsPb"
+    },
+    {
+      "content": "ttettee",
+      "votes": 0,
+      "id": "xol5hlz"
+    }
+  ]
+}
