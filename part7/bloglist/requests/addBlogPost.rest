@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJCZWFyZXIiLCJhbGciOiJIUzI1NiJ9.eyJ0aXRsZSI6ImVmZmZhIiwiYXV0aG9yIjoiNGE0dHJyNCIsInVybCI6ImZhcnI4bSIsImxpa2VzIjo1LCJ1c2VySWQiOiI2MDg1YjQ4Y2NmOTAxN2FiMDBiNTZkY2MifQ.hePpE6KXW-wAbxk5Vc5_BK245sI4BnxZI1k5QOOReZs
+
+{
+"title": "53rrrte6rtrtt767tr67", "author": "4ar", "url": "fre", "likes": 5
+}
+
