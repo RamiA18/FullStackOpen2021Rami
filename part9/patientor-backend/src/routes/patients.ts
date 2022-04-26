@@ -6,8 +6,29 @@ const router = express.Router();
 
 router.get("/", (_req, res) => {
   try {
-    res.send(patientServices.getNonSensitivePatient());
-    console.log("Successfully obtained non-sensitive patients' data");
+    res.send(patientServices.getPublicPatient());
+    console.log("Successfully obtained Public data");
+  } catch (err) {
+    console.log(err);
+    res.status(400).send(err.message);
+  }
+});
+
+// for tutorial purposes
+router.get("/all", (_req, res) => {
+  try {
+    res.send(patientServices.getPatients());
+    console.log("Successfully obtained All data");
+  } catch (err) {
+    console.log(err);
+    res.status(400).send(err.message);
+  }
+});
+
+router.get('/:id', (req, res) => {
+  try {
+    res.send(patientServices.findById(req.params.id));
+    console.log("Successfully obtained data by ID")
   } catch (err) {
     console.log(err);
     res.status(400).send(err.message);

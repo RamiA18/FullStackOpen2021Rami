@@ -51,6 +51,7 @@ const setNewPatient = ({
     gender: parseGender(gender),
     occupation: parseString(occupation),
     ssn: parseString(ssn),
+    entries: []
   };
 
   return newEntry;
