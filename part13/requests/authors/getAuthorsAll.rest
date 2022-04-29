@@ -1,0 +1,3 @@
+### get all authors
+GET http://localhost:3001/api/authors
+Content-Type: application/application/json

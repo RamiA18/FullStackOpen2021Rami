@@ -1,0 +1,3 @@
+### Searchh a post
+GET http://localhost:3001/api/blogs?search=Googlh 
+Content-Type: application/json

@@ -1,0 +1,3 @@
+### get all blog posts 
+GET http://localhost:3001/api/blogs 
+Content-Type: application/json
