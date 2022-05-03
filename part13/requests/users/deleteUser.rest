@@ -1,6 +1,0 @@
-PUT http://localhost:3001/api/users/arandomuser@gmail.com
-Content-Type: application/json
-
-{
-"name": "arandomusernewname"
-}

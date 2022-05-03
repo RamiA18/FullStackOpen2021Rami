@@ -1,0 +1,36 @@
+### Create a user
+POST http://localhost:3001/api/users 
+Content-Type: application/json
+
+{
+"username": "user@ghjk.com",
+"name":"ukk2"
+}
+
+
+### Edit a user
+PUT http://localhost:3001/api/users/6
+Content-Type: application/json
+
+{
+    "name": "n"
+}
+
+
+### Get all users
+GET http://localhost:3001/api/users 
+Content-Type: application/json
+
+
+
+### Get Specific User
+GET http://localhost:3001/api/users/999999
+Content-Type: application/json
+
+###
+GET http://localhost:3001/api/users/1?read=true 
+Content-Type: application/json
+
+### 
+GET http://localhost:3001/api/users/1?read=false 
+Content-Type: application/json

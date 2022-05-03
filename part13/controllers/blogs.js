@@ -1,109 +1,89 @@
-const router = require('express').Router()
-const { Blog, User } = require('../models')
-const jwt = require('jsonwebtoken');
-const { JWTSECRET } = require('../util/config');
-const { Op } = require('sequelize');
-
-// Middleware 
-const tokenExtractor = (req, res, next) => {
-  const authorization = req.get("authorization");
-  if (!authorization || !authorization.toLowerCase().startsWith("bearer ")) {
-    return res.status(401).json({ error: "token invalid/missing" });
-  }
-
-  req.token = authorization.substring(7)
-  const decodedToken = jwt.verify(req.token, JWTSECRET)
-  if (!req.token || !decodedToken) {
-    return res.status(401).json({ error: 'token missing/invalid' })
-  }
-
-  req.userId = decodedToken.id
-  next();
-};
-
-// Middleware 
-const blogFinder = async (req, res, next) => {
-    req.blog = await Blog.findByPk(req.params.id);
-    next();
-}
+const router = require("express").Router();
+const { Blog, User } = require("../models");
+const jwt = require("jsonwebtoken");
+const { JWTSECRET } = require("../util/config");
+const blogFinder = require("../util/blogFinder.js");
+const tokenExtractor = require("../util/tokenExtractor.js");
+const { Op } = require("sequelize");
   
-router.get('/', async (req, res) => {
-  let where = {}
-  if(req.query.search) {
+router.get("/", async (req, res) => {
+  let where = {};
+  const searchInput = req.query.search;
+  if(searchInput) {
     where = {
       [Op.or]: [
         {
           title: {
-            [Op.substring]: req.query.search
+            [Op.substring]: searchInput
           }
         },
         {
           author: {
-            [Op.substring]: req.query.search
+            [Op.substring]: searchInput
           }
         }
       ]
-    }
-  }
+    };
+  };
+
   const blogs = await Blog.findAll({
-    attributes: { exclude: ['userId']},
+    attributes: { exclude: ["userId"]},
     include: {
       model: User,
-      attributes: ['name']
+      attributes: ["name"]
     },
     where,
-    order: [['likes', 'DESC']]
+    order: [["likes", "DESC"]]
   });
+  console.log("Blogs fetched successfully");
   res.json(blogs);
 });
 
-// router.get('/', async (req, res) => {
+// router.get("/", async (req, res) => {
 //   const blogs = await Blog.findAll()
 //   res.json(blogs)
 //   console.log(blogs)
-//   console.log('Blogs fetched successfully')
+//   console.log("Blogs fetched successfully")
 
 // try {
 //     console.log(req.body)
 //     const blogs = await Blog.findAll()
 //     res.json(blogs)
-//     console.log('Blogs fetched successfully')
+//     console.log("Blogs fetched successfully")
 // } catch(error) {
-//     console.log('Error occured')
+//     console.log("Error occured")
 //     return res.status(400).json({ error })
 // }
 // })
  
-router.get('/:id', blogFinder, async (req, res) => {
-  const reqBlog = req.blog
+router.get("/:id", blogFinder, async (req, res) => {
+  const reqBlog = req.blog;
   if(reqBlog){
+    console.log("Fetched Successfully");
     res.json(reqBlog)
   }else{
-    return res.status(404).end()
-
+    console.log("Error occured fetching the blog post");
+    return res.status(404).send({error: "Not Found"});
+  };
+});
 //     try {
 //     console.log(req.body)
 //     const blog = await Blog.findByPk(req.params.id)
 //     res.json(blog)
 //     console.log("Blog fetched successfully")
 // } catch(error) {
-//     console.log('blog not found')
+//     console.log("blog not found")
 //     return res.status(404).end()
 // }
-  }
-})
 
-router.post('/', tokenExtractor, async (req, res, next) => {
-  try {
+router.post("/", tokenExtractor, async (req, res, next) => {
     const user = await User.findByPk(req.userId);
+    if (!user) return res.status(406).json({ error: "Authentication was not successfully completed" })
     const blog = await Blog.create({...req.body, userId: user.id});
+    console.log("Added Successfully");
     res.json(blog);
-  }
-  catch(error) {
-    next(error);
-  }
 
-// router.post('/', async (req, res) => {
+// router.post("/", async (req, res) => {
 //   try {
 //     const blog = await Blog.create(req.body);
 //     console.log("Blog added successfully")
@@ -114,22 +94,25 @@ router.post('/', tokenExtractor, async (req, res, next) => {
 //   }
 // })
 
-router.delete('/:id', tokenExtractor, async (req, res) => {
+// Delete a blog by the user who posted it
+router.delete("/:id", tokenExtractor, async (req, res) => {
   const id = req.params.id;
   const blog = await Blog.findByPk(id);
-  if(blog.userId !== req.userId)
+  if(blog.userId !== req.userId){
     return res.status(401).send("You are not authorized to do this");
-
+  };
   if(blog) {
     blog.destroy();
+    console.log("Deleted Successfully");
     res.status(204).end();
   }
   else {
+    console.log("Blog not found or already deleted");
     res.status(404).end();
-  }
+  };
 });
-
-// router.delete('/:id', blogFinder, async (req, res) => {
+});
+// router.delete("/:id", blogFinder, async (req, res) => {
 //   const reqBlog = req.blog
 //     if(reqBlog){
 //       reqBlog.destroy()
@@ -145,19 +128,18 @@ router.delete('/:id', tokenExtractor, async (req, res) => {
   //   console.log("blog does not exist")
   //   return res.status(404).end()
   // }
-})
 
-
-router.put('/:id', blogFinder, async (req, res) => {
+// Like a blog post
+router.put("/:id", blogFinder, async (req, res) => {
   if (req.blog) {
-    req.blog.likes = req.body.likes
-    await req.blog.save()
-    res.json(req.blog)
-    console.log("likes modified successfully")
+    req.blog.likes = req.body.likes;
+    await req.blog.save();
+    console.log("likes modified successfully");
+    res.json(req.blog);
   } else {
-    console.log("error in likes modification occured")
-    return res.status(404).end()
-  }
-})
+    console.log("error in likes modification occured");
+    return res.status(500).end();
+  };
+});
 
 module.exports = router;

@@ -1,8 +1,0 @@
-## Successful Login
-POST http://localhost:3001/api/login
-Content-Type: application/json
-
-{
-"username":"Heyman@gmail.com", "password": "apassword"
-}
-

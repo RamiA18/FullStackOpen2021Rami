@@ -1,3 +1,0 @@
-### get one blog post
-GET http://localhost:3001/api/blogs/1
-Content-Type: application/json
