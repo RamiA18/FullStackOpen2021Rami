@@ -1,13 +1,13 @@
-const { DataTypes } = require('sequelize')
+const { DataTypes } = require("sequelize");
 
 module.exports = {
   up: async ({ context: queryInterface }) => {
-    await queryInterface.addColumn('blogs', 'year', {
+    await queryInterface.addColumn("blogs", "year", {
       type: DataTypes.INTEGER,
-      allowNull: false
-    })
+      allowNull: false,
+    });
   },
   down: async ({ context: queryInterface }) => {
-    await queryInterface.removeColumn('blogs', 'year')
+    await queryInterface.removeColumn("blogs", "year");
   },
-}
+};

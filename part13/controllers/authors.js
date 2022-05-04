@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { Blog } = require ("../models");
+const { Blog } = require("../models");
 const { sequelize } = require("../models/blog");
 
 router.get("/", async (req, res) => {
@@ -7,12 +7,11 @@ router.get("/", async (req, res) => {
     attributes: [
       "author",
       [sequelize.fn("COUNT", sequelize.col("author")), "blogs"],
-      [sequelize.fn("SUM", sequelize.col("likes")), "likes"]
+      [sequelize.fn("SUM", sequelize.col("likes")), "likes"],
     ],
-    group: ["author"]
+    group: ["author"],
   });
-  if (!getResult) res.status(404).send({error: "No authors found"})
-
+  if (!getResult) res.status(404).send({ error: "No authors found" });
   res.json(getResult);
 });
 

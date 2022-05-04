@@ -18,5 +18,8 @@
     "pg": "^8.7.3",
     "sequelize": "^6.19.0",
     "umzug": "^3.1.1"
+  },
+  "devDependencies": {
+    "prettier": "2.6.2"
   }
 }
