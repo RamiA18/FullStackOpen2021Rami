@@ -1,38 +1,56 @@
+import patientData from "../../data/patients";
 import { v1 as uuid } from "uuid";
-import patientsData from "../../data/patients.json";
-// import { PatientNonSensitive, NewPatient, Patient } from "../types";
-import { Patient, PublicPatient, NewPatient } from '../types';
+import { Patient, NonSensitivePatient, NewPatient, NewEntry } from "../types";
 
-
-const patients: Array<Patient> = patientsData as Patient[];
-
-const getPatients = (): Array<Patient> => {
-  return patients;
+const getPatientsData = (): Patient[] => {
+  return patientData;
 };
 
-// const getNonSensitivePatient = (): PatientNonSensitive[] => {
-  const getPublicPatient = (): PublicPatient [] => {
-    return patientsData.map(({ id, name, dateOfBirth, gender, occupation }) => ({
+const getNonSensitivePatientsData = (): NonSensitivePatient[] => {
+  const mappedData = patientData.map(
+    ({ id, name, dateOfBirth, gender, occupation, entries }) => ({
       id,
       name,
       dateOfBirth,
       gender,
       occupation,
-    }));
-  };
+      entries,
+    })
+  );
+  return mappedData;
+};
 
-const addNewPatient = (patientToAdd: NewPatient): Patient => {
+const getNonSensitivePatientData = (id: string): NonSensitivePatient => {
+  const data = patientData.filter((patientData) => patientData.id === id);
+  if (data.length < 1) {
+    throw new Error("No patient with such id found");
+  }
+  return data[0];
+};
+
+const addPatientData = (patient: NewPatient): Patient => {
   const newPatient = {
     id: uuid(),
-    ...patientToAdd,
+    ...patient,
   };
-  patients.push(newPatient);
+  patientData.push(newPatient);
   return newPatient;
 };
 
-const findById = (id: string): Patient | undefined => {
-  const patient = patients.find(patient => patient.id === id);
-  return patient;
+const addEntry = (id: string, entry: NewEntry): Patient => {
+  const targetIndex = patientData.findIndex((patient) => patient.id === id);
+  const entryWithId = { id: uuid(), ...entry };
+  const target = patientData[targetIndex];
+
+  target.entries.push(entryWithId);
+
+  return target;
 };
 
-export default { getPublicPatient, addNewPatient, getPatients, findById };
+export default {
+  getPatientsData,
+  addPatientData,
+  getNonSensitivePatientData,
+  getNonSensitivePatientsData,
+  addEntry,
+};
